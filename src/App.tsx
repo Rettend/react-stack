@@ -1,24 +1,33 @@
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import packageJson from '../package.json'
+
+function getVersion(name: string) {
+  return name.replace('^', '')
+}
+
+function getPackageManager(name: string) {
+  return name.split('@')[1]
+}
 
 function App() {
   const [count, setCount] = useState(0)
+  const increment = useCallback(() => setCount(count + 1), [count])
 
-  const getVersion = (name: string) => name.replace('^', '')
-  const getPackageManager = (name: string) => name.split('@')[1]
-
-  const techStack = [
-    { name: 'React', version: getVersion(packageJson.dependencies.react) },
-    { name: 'TypeScript', version: getVersion(packageJson.devDependencies.typescript) },
-    { name: 'Vite', version: getVersion(packageJson.devDependencies.vite) },
-    { name: 'Bun', version: getPackageManager(packageJson.packageManager) },
-    { name: 'UnoCSS', version: getVersion(packageJson.devDependencies.unocss) },
-    { name: 'ESLint (antfu)', version: getVersion(packageJson.devDependencies.eslint) },
-    { name: 'Shadcn UI' },
-    { name: 'Iconify' },
-    { name: 'Fontsource' },
-  ]
+  const techStack = useMemo(
+    () => [
+      { name: 'React', version: getVersion(packageJson.dependencies.react) },
+      { name: 'TypeScript', version: getVersion(packageJson.devDependencies.typescript) },
+      { name: 'Vite', version: getVersion(packageJson.devDependencies.vite) },
+      { name: 'Bun', version: getPackageManager(packageJson.packageManager) },
+      { name: 'UnoCSS', version: getVersion(packageJson.devDependencies.unocss) },
+      { name: 'ESLint (antfu)', version: getVersion(packageJson.devDependencies.eslint) },
+      { name: 'Shadcn UI' },
+      { name: 'Iconify' },
+      { name: 'Fontsource' },
+    ],
+    [],
+  )
 
   return (
     <div className="min-h-screen flex flex-col items-center gap-15 bg-background p-8">
@@ -33,7 +42,7 @@ function App() {
           {' '}
           {count}
         </p>
-        <Button className="text-lg" onClick={() => setCount(count + 1)}>
+        <Button className="text-lg" onClick={increment}>
           Increment
         </Button>
       </div>

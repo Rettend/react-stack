@@ -15,7 +15,7 @@ export default defineConfig({
     presetWind3(),
     presetAnimations(),
     presetShadcn({
-      color: 'blue',
+      color: 'green',
     }),
     presetAttributify(),
     presetIcons({
@@ -36,11 +36,16 @@ export default defineConfig({
         return `html {
   padding: 0;
   margin: 0;
+  scroll-behavior: smooth;
+}
+  
+body {
+  padding: 0;
+  margin: 0;
   height: 100dvh;
   width: 100dvw;
   overflow-x: hidden;
   font-family: 'League Spartan Variable', sans-serif;
-  scroll-behavior: smooth;
 }
 `
       },
